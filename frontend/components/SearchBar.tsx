@@ -17,7 +17,7 @@ export default function SearchBar({
   placeholder = 'Name, Phone number',
 }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState(value);
-  const debouncedSearch = useDebounceCallback(onSearch, 500);
+  const debouncedSearch = useDebounceCallback(onSearch, 300);
   useEffect(() => {
     setSearchValue(value);
   }, [value]);
