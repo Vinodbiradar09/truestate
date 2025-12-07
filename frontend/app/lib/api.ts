@@ -1,8 +1,8 @@
 import axios from "axios";
 import { SalesFilters, PaginatedResponse, FilterOptions } from '@/app/types/index';
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4004';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://truestate-cm5m.vercel.app';
 
-
+// const API_BASE_URL ='http://localhost:4004';
 const apiClient = axios.create({
     baseURL : API_BASE_URL,
     headers : {
