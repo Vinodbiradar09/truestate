@@ -12,5 +12,30 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  backend:
+    build: ./backend
+    container_name: truestate_backend
+    environment:
+      DATABASE_URL: postgres://truestate:truestate@postgres:5432/truestatedb
+      FRONTEND_URL: http://localhost:3000
+      PORT: 4004
+    ports:
+      - "4004:4004"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: truestate_frontend
+    environment:
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:4004
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
 volumes:
   postgres_data:
+
