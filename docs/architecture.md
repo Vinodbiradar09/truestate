@@ -1,4 +1,4 @@
-A sales management system built for demonstrating search , filtering , sorting , and pagination handles all the functional requirement. the application handles the large dataset transactions with filtering debounced search and efficient database queries features a minimal ui built with next.js and shadcn ui and backend with express and postgresql database used the raw queries with pg driver i have never used the raw queries i usually depend on the orm like(prisma , mongoose) 
+A sales management system built for demonstrating search , filtering , sorting , and pagination handles all the functional requirement. the application handles the large dataset transactions with filtering debounced search and efficient database queries features a minimal ui built with next.js and shadcn ui and backend with express and postgresql database used the raw queries with pg driver 
 
 ## Tech Stack
 
@@ -10,8 +10,8 @@ A sales management system built for demonstrating search , filtering , sorting ,
 -- Api:client
 
 ## frontend
---Framework: Next.js (app router)
---Lang: Typescript
+--Framework: next.js (app router)
+--Lang: typescript
 --UI Library : shadcn/ui (Radix ui + tailwind css)
 --HTTP client: axios
 --Utils : usehooks-ts (debouncing)
@@ -25,9 +25,9 @@ the search functionality implements a debounced, case-insensitive search across 
 
 debouncing :- i have used useDebounceCallback from the usehooks-ts with 300ms to 500ms delay to prevent excessive api calls while typing 
 database query :- implemented the postgresql `ILIKE` operator for case-insensitive pattern matching , using the raw queries was very hard for me becoz i loose the types and manual writing queries with exact syntax is hard for me becoz i used to depend more on the orm's
-Multi-field Search:- Single search input queries both `customer_name` and `phone_number` fields using SQL `OR` condition
-State Management:- Search query synced with URL parameters, enabling shareable links and browser navigation
-User Experience:- Input updates instantly in UI while API calls are debounced, with a clear button for quick reset
+Multi-field Search:- single search input queries both `customer_name` and `phone_number` fields using SQL `OR` condition
+State Management:- search query synced with URL parameters, enabling shareable links and browser navigation
+User Experience:- input updates instantly in ui while API calls are debounced, with a clear button for quick reset
 
 **Technical Details:**
 ```sql
@@ -39,7 +39,7 @@ The system supports multi-select and range-based filtering with proper state man
 
 Multi-select filters:-Customer Region, Gender, Product Category, Tags, Payment Method
   - implemented using postgresql `ANY()` operator for array matching
-  - checkbox-based UI with active filter badges
+  - checkbox-based ui with active filter badges
   - sql: `WHERE column = ANY($1)` where $1 is an array of selected values
 
 Range Filters:-
@@ -58,7 +58,7 @@ Technical Implementation:-
 
 ## Sorting Implementation Summary
 
-Implements server-side sorting with three sort options, each supporting ascending and descending order:
+Implemented server-side sorting with three sort options, each supporting ascending and descending order:
 
 - Sort Options:
   1. date (newest first / oldest first) - Default: Newest First
@@ -88,7 +88,7 @@ Implements **server-side pagination** with 10 items per page:
 - Features:
   - previous/next navigation buttons
   - current page indicator (e.g., "1 / 100")
-  - record count display (e.g., "Showing 1 to 10 of 1,000 results")
+  - record count display (e.g., "Showing 1 to 10 of 50,000 results")
   - disabled state for first/last page boundaries
 
 - State Management:
@@ -109,6 +109,8 @@ LIMIT 10 OFFSET 0;
 SELECT COUNT(*) FROM sales_transactions WHERE ...;
 ```
 
+## Okay for seeding the data from csv i have papaparse and if you are seeding using the container you can seed up to 1 lakh but during the prod or if u are using the neon make sure to seed 50k to 70k max 
+## for my neon db i have seeded successfully 50k records 
 ## Setup Instructions
 1.running with docker (recommended)
 - ensure docker desktop is installed
@@ -144,7 +146,7 @@ postgresql (container) → internal only
 
 6.Seed Database Inside Docker
 docker exec -it truestate_backend npm run seed
-or you can run in backend folder also npm run seed data to seed data right now i have not given you the dataset becoz it is huge make sure to put the csv data in /data/sales_10k.csv and run the seed command
+or you can run in backend folder also npm run seed data to seed data right now i have not given you the dataset becoz it is huge make sure to put the csv data in /data/sales_50k.csv and run the seed command
 
 7.common Docker Commands
 # Start all services
@@ -171,7 +173,6 @@ Frontend
 cd frontend
 npm run build
 npm start
-
 
 
 1.manual setup (Without Docker)
@@ -210,7 +211,7 @@ psql -U postgres -c "CREATE DATABASE truestatedb;"
 psql -U postgres -c "CREATE USER truestate WITH PASSWORD 'truestate';"
 psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE truestatedb TO truestate;"
 
-5.seed 10,000 records
+5.seed 50,000 records
 npm run seed
 
 6.start backend server
@@ -281,6 +282,8 @@ truestate/
 │
 └── docker-compose.yml        # PostgreSQL setup
 ```
+## whenever we are seeding from 1lakh csv data to postgresql or neon our node.js memory run out happens make sure to either increase the memory or seed up to 50k to 70k
+
 
 
 
