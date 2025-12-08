@@ -119,7 +119,7 @@ function parseTags(tagsStr : string) : string[]{
 
 async function insertData() {
 
-    const csvPath = path.join(__dirname, '../../data/sales_10k.csv');
+    const csvPath = path.join(__dirname, '../../data/sales_50k.csv');
     const csvFile = fs.readFileSync(csvPath , "utf-8");
 
     console.log("parsing csv file");
@@ -129,7 +129,7 @@ async function insertData() {
         skipEmptyLines : true,
     });
 
-    const rowsToInsert = parsed.data.slice(0 , 10000);
+    const rowsToInsert = parsed.data.slice(0 , 50000);
     console.log(`found ${parsed.data.length} rows inserting first ${rowsToInsert.length} rows`);
 
     const batchSize = 500;
